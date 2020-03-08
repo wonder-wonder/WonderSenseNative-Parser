@@ -17,7 +17,10 @@ sensor_property m_property;
 
 
 // functions
-void init_parser(void *data) {}
+void init_parser(void *data)
+{
+  m_property = *(sensor_property *)data;
+}
 
 
 constexpr int packet_size = 4;
