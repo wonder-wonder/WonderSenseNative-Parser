@@ -18,7 +18,6 @@ struct sensor_property {
   std::uint16_t dataRate;
   std::uint8_t accFsr;
   std::uint16_t gyroFsr;
-  std::uint16_t dataRate;
   float magXcoef, magYcoef, magZcoef;
   std::uint8_t lpf;
 };
@@ -33,6 +32,6 @@ struct sensor_devInfo {
 
 
 extern void init_parser(void *data);
-extern void parse(void *data);
+extern sensor_data *parse(void *data);
 
 #endif /* end of include guard: PARSER_HEADER */
