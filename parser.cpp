@@ -24,13 +24,15 @@ void init_parser(void *data)
 
 
 constexpr int packet_size = 4;
-void parse(void *data)
+sensor_data *parse(void *data)
 {
   data_packet_t *data_packets;
-  data_packets = (data_packet_t *)malloc(sizeof(data) * 4);
+  data_packets = (data_packet_t *)malloc(sizeof(data_packet_t) * 4);
   data_packets = (data_packet_t *)data;
 
-  sensor_data ret[packet_size];
+  sensor_data *ret;
+  ret = (sensor_data *)malloc(sizeof(sensor_data) * 4);
+
   for (int i = 0; i < packet_size; ++i) {
     ret[i].ax = (data_packets[i].ax * m_property.accFsr / 32768.0);
     ret[i].ay = (data_packets[i].ay * m_property.accFsr / 32768.0);
@@ -48,4 +50,6 @@ void parse(void *data)
     ret[i].airPressure = data_packets[i].airPressure / 4096.0 * 3.3;
     ret[i].temperature = data_packets[i].temperature / 333.87 + 21.0;
   }
+
+  return ret;
 }
