@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/marsh/git/src/github.com/wonder-wonder/ws-ble-v1-data-parser/build",
+  "command": "/usr/bin/c++  -Dparser_EXPORTS  -O2 -std=c++14 -Wall -fPIC   -o CMakeFiles/parser.dir/parser.cpp.o -c /home/marsh/git/src/github.com/wonder-wonder/ws-ble-v1-data-parser/parser.cpp",
+  "file": "/home/marsh/git/src/github.com/wonder-wonder/ws-ble-v1-data-parser/parser.cpp"
+}
+]
