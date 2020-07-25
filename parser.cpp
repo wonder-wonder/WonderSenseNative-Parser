@@ -8,6 +8,16 @@ Parser::Parser(const SensorProperty &property)
   mProperty = property;
 }
 
+
+Parser::~Parser() {}
+
+
+void Parser::setProperty(const SensorProperty &property)
+{
+  mProperty = property;
+}
+
+
 const std::array<SensorData, c_packet_size> Parser::parse(
     std::uint8_t data[c_data_size])
 {

@@ -43,6 +43,7 @@ public:
   Parser(const SensorProperty &);
   ~Parser();
 
+  void setProperty(const SensorProperty &);
   const std::array<SensorData, c_packet_size> parse(
       std::uint8_t data[c_data_size]);
 };
