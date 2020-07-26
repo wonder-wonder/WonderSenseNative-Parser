@@ -2,6 +2,8 @@
 
 constexpr int INT12_MAX = 4096;
 
+static double accParser(std::int16_t, std::uint8_t);
+static double gyroParser(std::int16_t, std::uint8_t);
 
 Parser::Parser(const SensorProperty &property)
 {
@@ -26,23 +28,13 @@ const std::array<SensorData, c_packet_size> Parser::parse(
 
   std::array<SensorData, c_packet_size> ret;
   for (int i = 0; i < c_packet_size; ++i) {
-    ret[i].ax = (static_cast<double>(data_packets[i].ax * mProperty.accFsr)
-                 / static_cast<double>(INT16_MAX + 1));
+    ret[i].ax = accParser(data_packets[i].ax, mProperty.accFsr);
+    ret[i].ay = accParser(data_packets[i].ay, mProperty.accFsr);
+    ret[i].az = accParser(data_packets[i].az, mProperty.accFsr);
 
-    ret[i].ay = (static_cast<double>(data_packets[i].ay * mProperty.accFsr)
-                 / static_cast<double>(INT16_MAX + 1));
-
-    ret[i].az = (static_cast<double>(data_packets[i].az * mProperty.accFsr)
-                 / static_cast<double>(INT16_MAX + 1));
-
-    ret[i].gx = (static_cast<double>(data_packets[i].gx * mProperty.gyroFsr)
-                 / static_cast<double>(INT16_MAX + 1));
-
-    ret[i].gy = (static_cast<double>(data_packets[i].gy * mProperty.gyroFsr)
-                 / static_cast<double>(INT16_MAX + 1));
-
-    ret[i].gz = (static_cast<double>(data_packets[i].gz * mProperty.gyroFsr)
-                 / static_cast<double>(INT16_MAX + 1));
+    ret[i].gx = gyroParser(data_packets[i].gx, mProperty.gyroFsr);
+    ret[i].gy = gyroParser(data_packets[i].gy, mProperty.gyroFsr);
+    ret[i].gz = gyroParser(data_packets[i].gz, mProperty.gyroFsr);
 
     ret[i].mx = ((data_packets[i].mx * 0.15) * mProperty.magXcoef);
     ret[i].my = ((data_packets[i].my * 0.15) * mProperty.magYcoef);
@@ -58,4 +50,20 @@ const std::array<SensorData, c_packet_size> Parser::parse(
   }
 
   return ret;
+}
+
+static double accParser(std::int16_t value, std::uint8_t coef)
+{
+  // NOTE: the divisor is int16_max. but origin code use int16_max + 1.
+  std::int32_t tmp = static_cast<std::int32_t>(value) * coef;
+  return static_cast<double>(static_cast<double>(tmp)
+                             / static_cast<double>(INT16_MAX));
+}
+
+static double gyroParser(std::int16_t value, std::uint8_t coef)
+{
+  // NOTE: the divisor is int16_max. but origin code use int16_max + 1.
+  std::int32_t tmp = static_cast<std::int32_t>(value) * coef;
+  return static_cast<double>(static_cast<double>(tmp)
+                             / static_cast<double>(INT16_MAX));
 }
