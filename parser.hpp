@@ -1,10 +1,12 @@
 #ifndef PARSER_HEADER
 #define PARSER_HEADER
 
+#include <array>
 #include <cstdint>
-#include <string>
 
-struct sensor_data {
+struct data_packet_t;
+
+struct SensorData {
   double ax, ay, az;
   double gx, gy, gz;
   double mx, my, mz;
@@ -13,25 +15,38 @@ struct sensor_data {
   double airPressure;
 };
 
+struct data_packet_t {
+  std::int16_t ax, ay, az;   // 6 bytes
+  std::int16_t gx, gy, gz;   // 6 bytes
+  std::int16_t mx, my, mz;   // 6 bytes
+  std::int16_t temperature;  // 2 bytes
+  std::int16_t battery;      // 2 bytes
+  std::int16_t airPressure;  // 2 bytes //total size:24 bytes
+};
 
-struct sensor_property {
-  std::uint16_t dataRate;
+
+struct SensorProperty {
   std::uint8_t accFsr;
   std::uint16_t gyroFsr;
   float magXcoef, magYcoef, magZcoef;
-  std::uint8_t lpf;
 };
 
+constexpr int c_packet_size = 4;
+constexpr int c_data_size   = sizeof(data_packet_t) * c_packet_size;
 
-struct sensor_devInfo {
-  std::string manufacturer;
-  std::string hardware;
-  std::string firmware;
-  std::string address;
+class Parser
+{
+private:
+  SensorProperty mProperty;
+
+public:
+  Parser(const SensorProperty &);
+  ~Parser();
+
+  void setProperty(const SensorProperty &);
+  const std::array<SensorData, c_packet_size> parse(
+      std::uint8_t data[c_data_size]);
 };
 
-
-extern void init_parser(void *data);
-extern sensor_data *parse(void *data);
 
 #endif /* end of include guard: PARSER_HEADER */
