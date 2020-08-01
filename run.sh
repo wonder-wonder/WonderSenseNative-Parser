@@ -7,4 +7,5 @@ make
 
 if [[ $? -eq 0 ]]; then
   make test
+  ./test/Test_app
 fi

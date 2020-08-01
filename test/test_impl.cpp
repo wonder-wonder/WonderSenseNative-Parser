@@ -41,11 +41,21 @@ ParserTest::ParserTest()
 ParserTest::~ParserTest() {}
 
 
-TEST_F(ParserTest, test1)
+double getUnitValueOfParser()
+{
+  return static_cast<double>(1.0 / INT16_MAX) * 2.0;
+}
+
+TEST_F(ParserTest, ValueCheck)
 {
   auto parser = Parser{property};
   auto data =
       parser.parse(reinterpret_cast<std::uint8_t *>(test_byteArray_data));
 
-  EXPECT_EQ(0, data[0].ax);
+  EXPECT_EQ(0.0, data[0].ax);
+  EXPECT_EQ(static_cast<double>(1.0 / INT16_MAX) * 2.0, data[0].ay);
+  EXPECT_EQ(getUnitValueOfParser() * (INT16_MAX / 2), data[0].az);
+  EXPECT_EQ(getUnitValueOfParser() * (INT16_MAX / 2 + 2), data[0].gx);
+  EXPECT_EQ(2.0 - getUnitValueOfParser(), data[0].gy);
+  EXPECT_EQ(2.0, data[0].gz);
 }
