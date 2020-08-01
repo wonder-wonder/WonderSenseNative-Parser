@@ -21,6 +21,7 @@ CMake, makeはビルドツール。
 ```sh
 ./run.sh build
 ```
+ビルドの際にテスト結果も表示される。
 
 
 ### Clean
