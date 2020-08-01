@@ -19,11 +19,11 @@ CMake, makeはビルドツール。
 
 ### Build
 ```sh
-make build
+./run.sh build
 ```
 
 
 ### Clean
 ```sh
-make clean
+./run.sh clean
 ```
