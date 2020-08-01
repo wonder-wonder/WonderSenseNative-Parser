@@ -28,3 +28,4 @@ CMake, makeはビルドツール。
 ```sh
 ./run.sh clean
 ```
+このときに、GoogleTestも一緒に消される。

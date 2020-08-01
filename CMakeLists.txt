@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13.4)
+cmake_minimum_required(VERSION 3.10)
 
 project(
         parser_lib
@@ -22,6 +22,7 @@ set_target_properties(
         PROPERTIES
         VERSION ${PROJECT_VERSION}
 )
+
 
 enable_testing()
 add_subdirectory(test)
