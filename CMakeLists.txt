@@ -22,3 +22,6 @@ set_target_properties(
         PROPERTIES
         VERSION ${PROJECT_VERSION}
 )
+
+enable_testing()
+add_subdirectory(test)
