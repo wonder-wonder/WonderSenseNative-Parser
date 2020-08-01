@@ -7,7 +7,7 @@ ParserTest::ParserTest()
 {
   // make property
   property.accFsr   = 2;
-  property.gyroFsr  = 2000;
+  property.gyroFsr  = 2;
   property.magXcoef = 0;
   property.magYcoef = 0;
   property.magZcoef = 0;
@@ -55,7 +55,7 @@ TEST_F(ParserTest, ValueCheck)
   EXPECT_EQ(0.0, data[0].ax);
   EXPECT_EQ(static_cast<double>(1.0 / INT16_MAX) * 2.0, data[0].ay);
   EXPECT_EQ(getUnitValueOfParser() * (INT16_MAX / 2), data[0].az);
-  EXPECT_EQ(getUnitValueOfParser() * (INT16_MAX / 2 + 2), data[0].gx);
+  EXPECT_EQ(getUnitValueOfParser() * (INT16_MAX / 2 + 1), data[0].gx);
   EXPECT_EQ(2.0 - getUnitValueOfParser(), data[0].gy);
   EXPECT_EQ(2.0, data[0].gz);
 }
